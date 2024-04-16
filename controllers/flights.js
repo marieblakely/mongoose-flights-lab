@@ -49,10 +49,55 @@ function show(req, res) {
   })
 }
 
+function edit(req, res) {
+  Flight.findById(req.params.flightId)
+  .then(flight => {
+    res.render('flights/edit', {
+      flight: flight,
+      title: 'Edit Flight'
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/flights')
+  })
+}
+
+function update(req, res) {
+  // for (let key in req.body) {
+  //   if(req.body[key] === "") delete req.body[key]
+  // }
+  // if (req.body.cast) {
+  //   req.body.cast = req.body.cast.split(', ')
+  // }
+  Flight.findByIdAndUpdate(req.params.flightId, req.body, {new: true})
+  .then(flight => {
+    res.redirect(`/flights/${flight._id}`)
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/")
+  })
+}
+
+function deleteFlight(req, res) {
+  Flight.findByIdAndDelete(req.params.flightId)
+  .then(flight => {
+    res.redirect('/flights')
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/flights')
+  })
+}
+
 
 export {
   index,
   create,
   newFlight as new,
   show,
+  edit,
+  deleteFlight as delete,
+  update,
 }
