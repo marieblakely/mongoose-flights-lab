@@ -4,29 +4,29 @@
 
 <main>
   <h1>Flight List</h1>
-  <table id="list"></table>
-  <thead>
-    <tr>
-      <th>Airline</th>
-      <th>Airport</th>
-      <th>Flight Number</th>
-      <th>Departure Date</th>
-    </tr>
-  </thead>
-  <tbody>
-      <% flights.forEach(flight => { %>
+  <table id="list">
+    <thead>
+      <tr>
+        <th>Airline</th>
+        <th>Airport</th>
+        <th>Flight Number</th>
+        <th>Departure Day</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% flights.forEach((flight) => { %>
       <tr>
         <td><%= flight.airline %></td>
         <td><%= flight.airport %></td>
         <td><a href="/flights/<%= flight._id %>">DETAILS</a></td>
-        <td> 
+        <td>
           <form 
-            action="/flights/<%= flight._id %>?_method=DELETE" 
+            action="/flights/<%= flight._id %>?_method=DELETE"
             method="POST"
           >
             <button type="submit">X</button>
-        </form>
-      </td>
+          </form>
+        </td>
       </tr>
       <% }) %>
     </tbody>
