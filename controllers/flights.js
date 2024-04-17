@@ -41,7 +41,7 @@ function createTicket(req, res) {
     flight.tickets.push(req.body)
     flight.save()
     .then(() => {
-      res.redirect(`/flights/${req.params.flight._id}`)
+      res.redirect(`/flights/${req.params.flightId}`)
     })
     .catch(err => {
       console.log(err)
