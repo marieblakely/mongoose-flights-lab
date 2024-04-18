@@ -1,9 +1,11 @@
 import { Flight } from "../models/flight.js"
+import { Meal } from "../models/meal.js"
 
 
 function index(req, res) {
   Flight.find({})
   .then(flights => {
+    console.log(flights)
     res.render('flights/index', {
       flights: flights,
       title: 'All Flights',
@@ -57,10 +59,15 @@ function createTicket(req, res) {
 
 function show(req, res) {
   Flight.findById(req.params.flightId)
+  .populate('meals')
   .then(flight => {
-    res.render('flights/show', { 
-      title: 'Flight Detail', 
-      flight: flight,
+    Meal.find({_id: {$nin: flight.meals}})
+    .then(meals => {
+      res.render('flights/show', { 
+        title: 'Flight Detail', 
+        flight: flight,
+        meals: meals,
+      })
     })    
   })
   .catch(err => {
@@ -111,6 +118,40 @@ function deleteFlight(req, res) {
   })
 }
 
+function addMeal(req, res) {
+  function addMeal(req, res) {
+    // find the movie by id
+    Flight.findById(req.params.flightId)
+    .then(flight => {
+      // associate by adding to cast array
+      flight.meals.push(req.body.mealId)
+    // save the parent document
+      flight.save()
+      .then(() => {
+        // redirect to the movie show view
+      res.redirect(`/flights/${flight._id}`)
+      })
+      .catch(err => {
+        console.log(err)
+        res.redirect("/flights")
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect("/flight")
+    })
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
 
 export {
   index,
@@ -121,4 +162,5 @@ export {
   deleteFlight as delete,
   update,
   createTicket,
+  addMeal
 }
