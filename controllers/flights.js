@@ -119,7 +119,6 @@ function deleteFlight(req, res) {
 }
 
 function addMeal(req, res) {
-  function addMeal(req, res) {
     // find the movie by id
     Flight.findById(req.params.flightId)
     .then(flight => {
@@ -141,17 +140,7 @@ function addMeal(req, res) {
       res.redirect("/flight")
     })
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-}
+
 
 export {
   index,
